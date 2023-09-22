@@ -1,17 +1,15 @@
-import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './index.css'
-import React, {Component} from 'react';
-import Modal from './components/modal.jsx';
-import ModalButton from './components/modalBtn';
+import React, { Component } from 'react';
+import { Modal, Button } from 'react-bootstrap'
 
-class Index extends Component{
+class Index extends Component {
   constructor() {
-    super(); 
+    super();
   }
 
-  render(){
+  render() {
     return (
       <>
         <div>
@@ -23,8 +21,28 @@ class Index extends Component{
           </a>
         </div>
 
-        <ModalButton/>
-        <Modal/>
+        <Button variant="primary" onClick={handleShow}>
+          click modal
+        </Button>
+
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Hello,you're reading this text in a modal!</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        {/* <ModalButton target='addModal' label='+'/>
+        <Modal id="addModal">
+          Bitch
+        </Modal> */}
       </>
     )
   }
