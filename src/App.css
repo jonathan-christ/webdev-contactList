@@ -1,0 +1,98 @@
+.logo {
+  height: 2.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  p:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+#logos{
+  display: flex;
+  flex-direction: row;
+}
+
+#header{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+#title{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+#app{
+  margin: 1rem;
+}
+
+#thead *{
+  color: white;
+  background-color: rgb(13,110,253);
+  padding: 0.8rem;
+}
+
+#contacts{
+  margin:1rem;
+  padding:0;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.opBtns{
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+td{
+  vertical-align: middle;
+}
+
+.input{
+  background-color:transparent;
+  border: none;
+}
+
+.input:focus{
+  background-color:transparent;
+  box-shadow: none;
+}
+
+.edit{
+  border-bottom: 2px solid rgb(13,110,253);;
+}
+
+.error{
+  border-bottom: 2px solid red !important;
+}
