@@ -23,16 +23,25 @@ function App() {
       emailAdd: formData.email,
       contactNum: formData.number
     }
-    console.log(form)
+
     $.post("https://doited-error.000webhostapp.com/add.php", newData, (rawData) => {
       console.log(rawData)
-      // $("#addModal").slideUp('slow')
-      // $("#addModal").fadeOut('slow')
-      // $(".modal-backdrop").fadeOut('slow', ()=>{
-      //   $(this).hide()
-      // })
-      
-
+      let data = JSON.parse(rawData)
+      if(data.data == -1){
+        $("#email").addClass('is-invalid')
+        $("#validationemail").html("Email already exists!")
+        return false
+      }else{
+        $("#validationemail").html("Invalid email address!")
+        // reset form
+        form.reset()
+        $(form).find("input").each((idx, input)=>{
+            $(input).removeClass("is-valid")
+        })
+        
+          
+        return true
+      }
     })
   }
 
@@ -66,8 +75,10 @@ function App() {
         objValidity = false
       } else {
         let newKey = key == 'email'?key+"Add" : key=='number'?'contactNum' : key;
-        objValidity =
-          (newKey == 'emailAdd' || newKey == 'contactNum') ? patterns[newKey].test(value) : input.checkValidity()
+        objValidity = input.checkValidity()
+        if(newKey == 'emailAdd' || newKey == 'contactNum'){
+           objValidity = objValidity && patterns[newKey].test(value)
+        }
       }
       if (!objValidity) {
         $(input).addClass("is-invalid");
@@ -106,6 +117,10 @@ function App() {
 
     </>
   )
+}
+
+const hideModal = (target) =>{
+  $(target).modal('hide')
 }
 
 export default App

@@ -19,9 +19,6 @@ const AddForm = ({ action, validator }) => {
         }
 
         if (validator(formData, "", "U")) {
-            $(e.target).find("input").each((idx, input)=>{
-                $(input).removeClass("is-valid")
-            })
             action(e.target, formData)
         }
     }
