@@ -25,8 +25,8 @@ function App() {
     }
 
     $.post("https://doited-error.000webhostapp.com/add.php", newData, (rawData) => {
-      console.log(rawData)
       let data = JSON.parse(rawData)
+      console.log(data.message)
       if(data.data == -1){
         $("#email").addClass('is-invalid')
         $("#validationemail").html("Email already exists!")
@@ -47,13 +47,15 @@ function App() {
 
   const updateContact = (formData) => {
     $.post("https://doited-error.000webhostapp.com/edit.php", formData, (rawData) => {
-      console.log(rawData)
+      let data = JSON.parse(rawData)
+      console.log(data.message)
     })
   }
 
   const deleteContact = (id) => {
     $.post('https://doited-error.000webhostapp.com/delete.php', { id: id }, (rawData) => {
-      console.log(rawData);
+      let data = JSON.parse(rawData)
+      console.log(data.message)
     })
   }
 

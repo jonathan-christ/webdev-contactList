@@ -1,9 +1,10 @@
 import { useState } from "react"
 import {LuContact2} from "react-icons/lu"
+import './../index.css'
 
 const ModalBtn = ({target, title}) =>{
     return (
-        <button className="btn btn-primary" data-bs-toggle="modal"  data-bs-target={"#"+target}>
+        <button className="modalbtn btn btn-primary" data-bs-toggle="modal"  data-bs-target={"#"+target}>
             {title}
             <LuContact2/>
         </button>
