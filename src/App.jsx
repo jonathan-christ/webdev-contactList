@@ -24,7 +24,7 @@ function App() {
       contactNum: formData.number
     }
 
-    $.post("https://doited-error.000webhostapp.com/add.php", newData, (rawData) => {
+    $.post("https://conlisweb.000webhostapp.com/add.php", newData, (rawData) => {
       let data = JSON.parse(rawData)
       console.log(data.message)
       if(data.data == -1){
@@ -46,14 +46,14 @@ function App() {
   }
 
   const updateContact = (formData) => {
-    $.post("https://doited-error.000webhostapp.com/edit.php", formData, (rawData) => {
+    $.post("https://conlisweb.000webhostapp.com/edit.php", formData, (rawData) => {
       let data = JSON.parse(rawData)
       console.log(data.message)
     })
   }
 
   const deleteContact = (id) => {
-    $.post('https://doited-error.000webhostapp.com/delete.php', { id: id }, (rawData) => {
+    $.post('https://conlisweb.000webhostapp.com/delete.php', { id: id }, (rawData) => {
       let data = JSON.parse(rawData)
       console.log(data.message)
     })
@@ -96,7 +96,7 @@ function App() {
   }
 
   useEffect(() => {
-    fetch("https://doited-error.000webhostapp.com/read.php")
+    fetch("https://conlisweb.000webhostapp.com/read.php")
       .then(rawData => rawData.json())
       .then(rawData => setContacts(rawData.data))
       .catch(err => {
