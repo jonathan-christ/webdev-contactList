@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AiOutlineEdit, AiOutlineCheck } from "react-icons/ai"
 import { RxCross2 } from "react-icons/rx"
 
-const EditBtn = ({ onEdit, onSave }) => {
+const EditBtn = ({ onEdit, onSave, onCancel }) => {
     const modes = [
         {
             name: <AiOutlineEdit />,
@@ -28,10 +28,10 @@ const EditBtn = ({ onEdit, onSave }) => {
         onEdit(isEdit)
     }
 
-    const toggleFunction = () => {
+    const toggleFunction = async () => {
         let doToggle = true
         if (!isEdit) {
-            doToggle = onSave(true)
+            doToggle = await onSave()
             console.log(doToggle)
         }
 
@@ -52,7 +52,10 @@ const EditBtn = ({ onEdit, onSave }) => {
 
             {//Make cancel btn if edit
                 (!isEdit) &&
-                <button className="btn btn-danger" onClick={toggleMode}>
+                <button className="btn btn-danger" onClick={()=>{
+                    onCancel()
+                    toggleMode()
+                }}>
                     <RxCross2 />
                 </button>
             }

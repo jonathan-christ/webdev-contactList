@@ -1,7 +1,7 @@
 import Contact from './contact'
 import $ from 'jquery'
 
-const Contacts = ({ contacts, validator, operations}) => {
+const Contacts = ({ contacts, validator, onSave, onDelete}) => {
     
     let contactsArr = [], x=0
 
@@ -24,7 +24,7 @@ const Contacts = ({ contacts, validator, operations}) => {
                 <tbody>
                     {contactsArr.map((contact, index) => {
                         return (
-                            <Contact key={"tr-"+contact.id} contact={contact} validator={validator} operations={operations}/>
+                            <Contact key={"tr-"+contact.id} contact={contact} validator={validator} onSave={onSave} onDelete={onDelete}/>
                         )
                     })}
                 </tbody>

@@ -5,9 +5,9 @@ import { useState } from "react"
 import { AiOutlineDelete, AiOutlineTrademarkCircle } from "react-icons/ai"
 
 
-const Contact = ({ contact, validator, operations }) => {
+const Contact = ({ contact, validator, onSave, onDelete}) => {
     const [editable, setEditable] = useState(false)
-    const oldData = contact
+    let oldData = contact
     contact = {
         id: oldData.id,
         lname: oldData.lastName,
@@ -15,6 +15,7 @@ const Contact = ({ contact, validator, operations }) => {
         emailAdd: oldData.email,
         contactNum: oldData.number
     }
+    oldData = contact
     const objKeys = Object.keys(contact)
 
     const handleEdit = (data) => {
@@ -31,27 +32,48 @@ const Contact = ({ contact, validator, operations }) => {
         setEditable(data)
     }
 
-    const handleUpdate = () => {
+    const handleUpdate = async () => {
         let valArr = getContactDetails();
+        let retVal = false;
         let formData = {
             id: oldData.id,
             lname: valArr[0],
             fname: valArr[1],
             emailAdd: valArr[2],
             contactNum: valArr[3],
-            curEmail: oldData.email
+            curEmail: oldData.emailAdd
         }
 
         if(validator(formData, "Tbl")){
-            $("tr#"+oldData.id).find("input").each((idx, input)=>{
-                $(input).removeClass('is-valid')
-            })
-            operations.onSave(formData)
-            return true
-        }else{
-            return false
+            await onSave(formData).then((result)=>{
+                if(result){
+                    $("tr#"+oldData.id).find("input").each((idx, input)=>{
+                        $(input).removeClass('is-valid')
+                    })
+                    retVal = true
+                }else{
+                    $("#Tbl"+oldData.id+"emailAdd")
+                        .removeClass("is-valid")
+                        .addClass("is-invalid")
+                }
+            })    
         }
         
+        return retVal
+    }
+
+    const cancelUpdate = () =>{
+        let valArr = {};
+        let iter = 0
+        $.each($("#" + contact.id)
+            .find("input.input"),
+            ((idx, input) => {
+                $(input)
+                    .val(oldData[objKeys[idx+1]])
+                    .removeClass("is-valid")
+                    .removeClass("is-invalid")
+            }))
+
     }
 
     const getContactDetails = () => {
@@ -83,10 +105,10 @@ const Contact = ({ contact, validator, operations }) => {
                     )
                 })}
             <td className="opBtns">
-                <EditBtn target={contact.id} onEdit={handleEdit} onSave={handleUpdate} />
+                <EditBtn target={contact.id} onEdit={handleEdit} onSave={handleUpdate} onCancel={cancelUpdate}/>
                 {!editable &&
                     <button className="btn btn-danger" onClick={() => {
-                        operations.onDelete(contact.id)
+                        onDelete(contact.id)
                     }}><AiOutlineDelete /></button>
                 }
             </td>

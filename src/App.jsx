@@ -27,7 +27,7 @@ function App() {
     $.post("https://conlisweb.000webhostapp.com/add.php", newData, (rawData) => {
       let data = JSON.parse(rawData)
       console.log(data.message)
-      if(data.data == -1){
+      if(data.data === undefined){
         $("#email").addClass('is-invalid')
         $("#validationemail").html("Email already exists!")
         return false
@@ -38,18 +38,29 @@ function App() {
         $(form).find("input").each((idx, input)=>{
             $(input).removeClass("is-valid")
         })
-        
-          
         return true
       }
     })
   }
 
-  const updateContact = (formData) => {
-    $.post("https://conlisweb.000webhostapp.com/edit.php", formData, (rawData) => {
-      let data = JSON.parse(rawData)
-      console.log(data.message)
+  const updateContact = async (formData)=> {
+    let promise = new Promise((resolve, reject)=>{
+      $.post("https://conlisweb.000webhostapp.com/edit.php", formData, (rawData) => {
+        resolve(rawData)
+      })
+      .fail((e)=>{
+        reject(e)
+      })
     })
+
+    const rawResp = await promise
+    const resp = JSON.parse(rawResp)
+    console.log(resp.status)
+    if(resp.status == 400){
+      return false
+    }else{
+      return true
+    }
   }
 
   const deleteContact = (id) => {
@@ -108,10 +119,7 @@ function App() {
     <>
       <div id="app">
         <Header />
-        <Contacts contacts={contacts} validator={validateData} operations={{
-          onSave: updateContact,
-          onDelete: deleteContact
-        }} />
+        <Contacts contacts={contacts} validator={validateData} onSave={updateContact} onDelete={deleteContact} />
         <Modal id="addModal" title="Add Contact">
           <AddForm action={addContact} validator={validateData} />
         </Modal>
