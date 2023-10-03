@@ -6,10 +6,10 @@ function Logos() {
     return(
         <div id="logos">
             <p>
-                <img src={viteLogo} className="logo" alt="Vite logo" />
+                <img src={viteLogo} id="viteLogo" className="logo" alt="Vite logo" />
             </p>
             <p>
-                <img src={reactLogo} className="logo react" alt="React logo" />
+                <img src={reactLogo} id="reactLogo" className="logo react" alt="React logo" />
             </p>
         </div>
     )

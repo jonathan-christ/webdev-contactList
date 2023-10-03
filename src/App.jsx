@@ -23,13 +23,15 @@ function App() {
       emailAdd: formData.email,
       contactNum: formData.number
     }
-
-    $.post("https://conlisweb.000webhostapp.com/add.php", newData, (rawData) => {
+    $("#reactLogo").addClass("faster")
+    $(".loaderIcon").show()
+    $.post("https://contlist.000webhostapp.com/add.php", newData, (rawData) => {
       let data = JSON.parse(rawData)
       console.log(data.message)
-      if(data.data === undefined){
+      if(data.data == -1){
         $("#email").addClass('is-invalid')
         $("#validationemail").html("Email already exists!")
+        $(".loaderIcon").hide()
         return false
       }else{
         $("#validationemail").html("Invalid email address!")
@@ -38,6 +40,8 @@ function App() {
         $(form).find("input").each((idx, input)=>{
             $(input).removeClass("is-valid")
         })
+        $("#reactLogo").removeClass("faster")
+        $(".loaderIcon").hide()
         return true
       }
     })
@@ -45,7 +49,7 @@ function App() {
 
   const updateContact = async (formData)=> {
     let promise = new Promise((resolve, reject)=>{
-      $.post("https://conlisweb.000webhostapp.com/edit.php", formData, (rawData) => {
+      $.post("https://contlist.000webhostapp.com/edit.php", formData, (rawData) => {
         resolve(rawData)
       })
       .fail((e)=>{
@@ -53,9 +57,9 @@ function App() {
       })
     })
 
+    
     const rawResp = await promise
     const resp = JSON.parse(rawResp)
-    console.log(resp.status)
     if(resp.status == 400){
       return false
     }else{
@@ -64,7 +68,7 @@ function App() {
   }
 
   const deleteContact = (id) => {
-    $.post('https://conlisweb.000webhostapp.com/delete.php', { id: id }, (rawData) => {
+    $.post('https://contlist.000webhostapp.com/delete.php', { id: id }, (rawData) => {
       let data = JSON.parse(rawData)
       console.log(data.message)
     })
@@ -107,7 +111,7 @@ function App() {
   }
 
   useEffect(() => {
-    fetch("https://conlisweb.000webhostapp.com/read.php")
+    fetch("https://contlist.000webhostapp.com/read.php")
       .then(rawData => rawData.json())
       .then(rawData => setContacts(rawData.data))
       .catch(err => {

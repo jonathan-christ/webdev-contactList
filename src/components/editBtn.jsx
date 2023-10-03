@@ -32,7 +32,6 @@ const EditBtn = ({ onEdit, onSave, onCancel }) => {
         let doToggle = true
         if (!isEdit) {
             doToggle = await onSave()
-            console.log(doToggle)
         }
 
         if (doToggle) toggleMode()

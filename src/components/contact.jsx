@@ -3,6 +3,7 @@ import EditBtn from "./editBtn"
 
 import { useState } from "react"
 import { AiOutlineDelete, AiOutlineTrademarkCircle } from "react-icons/ai"
+import { useEffect } from 'react'
 
 
 const Contact = ({ contact, validator, onSave, onDelete}) => {
@@ -45,6 +46,7 @@ const Contact = ({ contact, validator, onSave, onDelete}) => {
         }
 
         if(validator(formData, "Tbl")){
+            $("#reactLogo").addClass("faster")
             await onSave(formData).then((result)=>{
                 if(result){
                     $("tr#"+oldData.id).find("input").each((idx, input)=>{
@@ -56,6 +58,7 @@ const Contact = ({ contact, validator, onSave, onDelete}) => {
                         .removeClass("is-valid")
                         .addClass("is-invalid")
                 }
+                $("#reactLogo").removeClass("faster")
             })    
         }
         

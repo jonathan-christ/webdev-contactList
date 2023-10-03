@@ -21,8 +21,21 @@
 
 @media (prefers-reduced-motion: no-preference) {
   p:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+    animation: logo-spin infinite 10s ease-in;
   }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  p:nth-of-type(2) .faster {
+    animation: logo-spin infinite 1s linear;
+  }
+}
+
+.loaderIcon {
+  margin-right: 7px;
+  top: 2px;
+  animation: spin 1s infinite linear;
+  display: none;
 }
 
 .card {
@@ -105,4 +118,24 @@ th{
 
 th:nth-child(6){
   text-align: center;
+}
+
+.table{
+  margin: 0;
+}
+
+.titleLoading{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+@keyframes spin {
+  from {
+      transform: scale(1) rotate(0deg);
+  }
+  to {
+      transform: scale(1) rotate(360deg);
+  }
 }
